@@ -66,10 +66,12 @@ public class MyMojo extends ResolveDependenciesMojo {
 
         if (StringUtils.isNotBlank(xbOutPutDir)) {
             Path path = Paths.get(xbOutPutDir);
-            if (path.isAbsolute()) {
+            if (!path.isAbsolute()) {
+                /*  不是绝对路径就放到target目录下,且path变为绝对路径 */
                 path = Paths.get(project.getBuild().getDirectory(), path.toString());
             }
             if (!Files.exists(path) || !Files.isDirectory(path)) {
+                /*  目录不存在 或者 存在但是不是个文件夹, 都会创建文件夹  */
                 path.toFile().mkdirs();
             }
             targetApis = path.toString();
