@@ -53,6 +53,21 @@ public class MyMojo extends ResolveDependenciesMojo {
      */
     @Parameter
     String port;
+    /**
+     * 端口
+     */
+    @Parameter
+    String title;
+    /**
+     * 端口
+     */
+    @Parameter
+    String description;
+    /**
+     * 端口
+     */
+    @Parameter
+    String version;
 
     private static final String SOURCE_CLASSIFIER = "sources";
 
@@ -85,7 +100,10 @@ public class MyMojo extends ResolveDependenciesMojo {
                 .setOutPutDir(targetApis)
                 .setProtocol(protocol)
                 .setPort(port)
-                .setHost(host);
+                .setHost(host)
+                .setTitle(StringUtils.isBlank(title)?project.getName():title)
+                .setVersion(version)
+                .setDescription(description);
         AbstractJavaProcessSynopsis javaProcessSynopsis = new MavenJavaProcessSynopsis(javaConfig);
         javaProcessSynopsis.buildDoc();
         getLog().info(javaDependencySource.toString());
